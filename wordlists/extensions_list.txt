@@ -1114,6 +1114,7 @@
 .en.htm
 .engine
 .env
+.env.local
 .error-log
 .esp
 .ex
