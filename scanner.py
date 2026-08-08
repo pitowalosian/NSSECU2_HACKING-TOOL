@@ -67,8 +67,8 @@ if __name__ == "__main__":
 
     if f:
         print(f"Found {len(f)} potentially sensitive files: \n")
-
-    for file in f:
-        print(f" - {file}")
+        
+        for file in f:
+            print(f" - {file}")
     else:
         print("No sensitive files found.")
