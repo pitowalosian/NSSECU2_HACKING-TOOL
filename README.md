@@ -1,5 +1,12 @@
 # Sensitive File Scanner
 
+## Features [not required]
+TODO:
+- 
+FINISHED:
+- sensitive filenames
+- sensitive extensions
+
 ## Description
 A command-line tool that scans a **local folder** for potentially sensitive files that may contain private or important information. It checks files based on their extensions and filename keywords, such as `.env` files, database backups, configuration files, and other sensitive files.
 

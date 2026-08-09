@@ -108,16 +108,26 @@ def display_results(path, findings):
 if __name__ == "__main__":
     # to run: python scanner.py --path [insert path]
     banner()
-    parser = argparse.ArgumentParser(description='Choose directory to scan')
+    parser = argparse.ArgumentParser(description='Choose directory to scan', usage='%(prog)s --path [PATH]')
     parser.add_argument('--path',
-                      default=os.getcwd()) # default scan current directory
+                      default=os.getcwd(),
+                      help='directory to scan (default: current directory)') # default scan current directory
+    parser.add_argument('--extensions',
+                        type=lambda s: s.split(','),
+                        default=[],
+                        required=False,
+                        help='file extensions to scan, e.g. --extensions .env, .key, .pem')
     
     args = parser.parse_args()
 
     print(f"Scanning {args.path} for sensitive files.\n\n")
 
     # Loading the wordlists
-    ext_list = load_wordlist("wordlists/extensions_list.txt")
+    if (args.extensions):
+        ext_list = args.extensions
+    else:
+        ext_list = load_wordlist("wordlists/extensions_list.txt")
+
     filename_list = load_wordlist("wordlists/sensitive_filenames.txt")
 
     # Scanning
