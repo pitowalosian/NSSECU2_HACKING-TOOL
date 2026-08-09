@@ -190,11 +190,33 @@ def scan(path, ext_list, filename_list):
 
             if is_sensitive(f, ext_list):
                 severity = get_severity(f)
-                sensitive_files.append((fullpath, "Sensitive extension", severity))
+
+                # Find specific extension that matched
+                matched_extension = None
+
+                for ext in ext_list:
+                    if f.lower().endswith(ext.lower()):
+                        matched_extension = ext.lower()
+                        break
+
+                reason = f"Sensitive extension ({matched_extension})"
+
+                sensitive_files.append((fullpath, reason, severity))
 
             elif is_sensitive_filename(f, filename_list):
                 severity = get_severity(f)
-                sensitive_files.append((fullpath, "Sensitive filename", severity))
+
+                # Find specific filename keyword that matched
+                matched_keyword = None
+
+                for keyword in filename_list:
+                    if keyword.lower() in f.lower():
+                        matched_keyword = keyword.lower()
+                        break
+
+                reason = f'Sensitive filename keyword ("{matched_keyword}")'
+
+                sensitive_files.append((fullpath, reason, severity))
 
     # To order output based on severity
     severity_order = {
@@ -223,9 +245,9 @@ def display_results(path, findings, files_scanned, scan_duration):
     low_count = 0
 
     for file, reason, severity in findings:
-        if reason == "Sensitive extension":
+        if reason.startswith("Sensitive extension"):
             extension_count += 1
-        elif reason == "Sensitive filename":
+        elif reason.startswith("Sensitive filename"):
             filename_count += 1
 
         if severity == "CRITICAL":
@@ -291,9 +313,9 @@ def save_csv(findings, output_path):
     low_count = 0
 
     for file, reason, severity in findings:
-        if reason == "Sensitive extension":
+        if reason.startswith("Sensitive extension"):
             extension_count += 1
-        elif reason == "Sensitive filename":
+        elif reason.startswith("Sensitive filename"):
             filename_count += 1
 
         if severity == "CRITICAL":
