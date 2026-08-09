@@ -2,6 +2,7 @@ import os, sys
 from os import walk
 from os.path import isfile, join, exists
 import argparse
+import csv
 
 def banner():
     print("""
@@ -104,6 +105,15 @@ def display_results(path, findings):
     print("\n" + "=====================================================================")
     print("                      ~~!SCAN COMPLETE!~~")
     print("=====================================================================")
+#store findings in csv
+def save_csv(findings, output_path): 
+    with open(output_path, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(["File", "Path", "Reason"])
+        for file, reason in findings:
+            writer.writerow([os.path.basename(file), file, reason])
+
+    print(f"\nResults saved to {output_path}")
 
 if __name__ == "__main__":
     # to run: python scanner.py --path [insert path]
@@ -125,6 +135,9 @@ if __name__ == "__main__":
     parser.add_argument('--customFilenames',
                         default=None,
                         help='path to a custom sensitive filenames wordlist file')
+    parser.add_argument('--csvoutput',
+                        default=None,
+                        help='save results to a CSV file, e.g. --csvoutput results.csv')
 
     args = parser.parse_args()
 
@@ -161,3 +174,8 @@ if __name__ == "__main__":
 
     # Display the results
     display_results(args.path, findings)
+
+    # Save results to CSV 
+    if args.csvoutput:
+        output_path = join("results", args.csvoutput)
+        save_csv(findings, output_path)

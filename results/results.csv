@@ -1,0 +1,13 @@
+File,Path,Reason
+.env,C:\Users\Myka\Desktop\sensitive_test_target\.env,Sensitive extension
+archive.zip,C:\Users\Myka\Desktop\sensitive_test_target\archive.zip,Sensitive extension
+database.bak,C:\Users\Myka\Desktop\sensitive_test_target\database.bak,Sensitive extension
+id_rsa.key,C:\Users\Myka\Desktop\sensitive_test_target\id_rsa.key,Sensitive extension
+mykeys.jks,C:\Users\Myka\Desktop\sensitive_test_target\mykeys.jks,Sensitive extension
+server.log,C:\Users\Myka\Desktop\sensitive_test_target\server.log,Sensitive extension
+settings.ini,C:\Users\Myka\Desktop\sensitive_test_target\settings.ini,Sensitive extension
+site.crt,C:\Users\Myka\Desktop\sensitive_test_target\site.crt,Sensitive extension
+users_backup.sql,C:\Users\Myka\Desktop\sensitive_test_target\users_backup.sql,Sensitive extension
+web.config,C:\Users\Myka\Desktop\sensitive_test_target\web.config,Sensitive extension
+api_key.pem,C:\Users\Myka\Desktop\sensitive_test_target\subdir\api_key.pem,Sensitive extension
+report.csv,C:\Users\Myka\Desktop\sensitive_test_target\subdir\report.csv,Sensitive extension
