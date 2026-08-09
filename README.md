@@ -37,8 +37,49 @@ yada yada
 2. Ensure Python 3.8+ is installed (`python --version` or `py --version`).
 
 ## Usage
+Run from inside the tool's root folder (required, since wordlist paths are relative to it):
 
-yada yada
+```bash
+python scanner.py --path [TARGET_DIRECTORY]
+```
+
+### Options
+
+| Flag | Description |
+|---|---|
+| `--path` | Directory to scan (default: current working directory) |
+| `--ext` | Comma-separated list of extensions to scan for, e.g. `--ext .env,.key,.pem` (overrides all extension wordlists) |
+| `--curated` | Use the shorter curated extensions wordlist instead of the full list |
+| `--customExt` | Path to a custom extensions wordlist file |
+| `--customFilenames` | Path to a custom sensitive filenames wordlist file |
+| `--csvoutput` | Save results to a CSV file inside the `results/` folder, e.g. `--csvoutput scan1.csv` |
+
+### Examples
+
+Scan a folder with the default (full) extensions list:
+```bash
+python scanner.py --path "C:\Users\you\Documents\project"
+```
+
+Scan using the shorter curated extensions list:
+```bash
+python scanner.py --path "C:\Users\you\Documents\project" --curated
+```
+
+Scan for specific extensions only:
+```bash
+python scanner.py --path "C:\Users\you\Documents\project" --ext .env,.key,.pem
+```
+
+Use your own custom wordlists:
+```bash
+python scanner.py --path "C:\Users\you\Documents\project" --customExt my_ext.txt --customFilenames my_keywords.txt
+```
+
+Export results to CSV:
+```bash
+python scanner.py --path "C:\Users\you\Documents\project" --curated --csvoutput scan_results.csv
+```
 
 ## Testing Environment
 This tool was tested against:
