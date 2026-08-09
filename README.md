@@ -131,7 +131,8 @@ Filebuster only scans file names and extensions and does not scan file contents.
 
 
 ## Future Improvements
-yada yada
+- **Scan subdirectories:** Currently, Casefiler only scans the selected folder. It could also scan its subfolders and files.
+- **Flexible severity ratings:** Severity ratings are currently hardcoded. They could be organized into different wordlists for easier customization and updates.
 
 ## Ethical Disclaimer
 This tool was developed strictly for educational purposes as part of an academic course project. It is intended to help users understand how sensitive files can be identified through filename and extension analysis, within controlled and authorized environments only.
