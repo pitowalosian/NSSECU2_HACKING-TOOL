@@ -33,9 +33,11 @@ yada yada
 - Python 3.8+
 
 ## Installation
-yada yada
+1. Clone or download this repository.
+2. Ensure Python 3.8+ is installed (`python --version` or `py --version`).
 
 ## Usage
+
 yada yada
 
 ## Testing Environment
