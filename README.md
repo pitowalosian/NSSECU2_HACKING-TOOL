@@ -41,7 +41,7 @@ Run the tool using Python:
 python casefiler.py --help
 ```
 
-> **Note:** if `python` is not recognized or fails to run, your PATH may not be configured correctly. You'll need to fix this manually (e.g. via "Edit environment variables for your account" in Windows Settings), or use the `py` launcher instead (`py casefiler.py --help`) as a workaround.
+> **Note:** if `python` is not recognized or fails to run, your PATH may not be configured correctly. You'll need to fix it manually (e.g. via "Edit environment variables for your account" in Windows Settings), or use the `py` launcher instead (`py casefiler.py --help`).
 
 You can also use the included batch file:
 ```bash
