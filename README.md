@@ -45,7 +45,7 @@ python casefiler.py --help
 
 You can also use the included batch file:
 ```bash
-casefiler.bat --help
+casefiler --help
 ```
 
 ### Linux/macOS
