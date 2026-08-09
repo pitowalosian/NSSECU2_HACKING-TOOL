@@ -8,6 +8,9 @@ The tool also shows why each file was flagged, whether it was detected because o
 ## Purpose
 yada yada
 
+## User Manual
+See the full user manual here  [User Manual]()
+
 ## Features
 - **Extension check**: flags files whose extension matches an entry in `wordlists/extensions_list.txt` (a curated list of genuinely sensitive extensions, not a broad web-fuzzing wordlist).
 - **Filename keyword check**: flags files whose name contains a known sensitive keyword from `wordlists/filenames.txt` (e.g. `.env`, `.git`, `id_rsa`, `web.config`), even if the extension is not included in the extensions wordlist.
