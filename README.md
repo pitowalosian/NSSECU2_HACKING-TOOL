@@ -116,7 +116,8 @@ yada yada
 yada yada
 
 ## Limitations
-yada yada
+Filebuster only scans file names and extensions and does not scan file contents. Files containing sensitive data may still be flagged as non-sensitive and vice versa. Additionally, severity ratings are hardcoded into the program. Severity ratings should only be used to get an initial idea of the files, and should not be taken as objective fact. Using a different wordlist could show missing severity ratings. 
+
 
 ## Future Improvements
 yada yada
