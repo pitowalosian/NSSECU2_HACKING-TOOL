@@ -288,7 +288,7 @@ def display_results(path, findings, files_scanned, scan_duration):
     print("=====================================================================")
 
 
-def save_csv(findings, output_path):
+def save_csv(findings, output_path, files_scanned, scan_duration):
     """Store findings in a CSV file"""
     extension_count = 0
     filename_count = 0
@@ -298,7 +298,7 @@ def save_csv(findings, output_path):
     medium_count = 0
     low_count = 0
 
-    for file, reason, severity in findings:
+    for file, reasons, severity in findings:
         if any(cat == "Sensitive extension" for cat, _ in reasons):
             extension_count += 1
         if any(cat == "Sensitive filename" for cat, _ in reasons):
@@ -318,7 +318,9 @@ def save_csv(findings, output_path):
 
     with open(output_path, 'w', newline='') as f:
         writer = csv.writer(f)
+        writer.writerow(["Files scanned", files_scanned])
         writer.writerow(["Total findings", len(findings)])
+
         writer.writerow(["Sensitive extensions", extension_count])
         writer.writerow(["Sensitive filenames", filename_count])
 
@@ -326,12 +328,14 @@ def save_csv(findings, output_path):
         writer.writerow(["High findings", high_count])
         writer.writerow(["Medium findings", medium_count])
         writer.writerow(["Low findings", low_count])
+
+        writer.writerow(["Scan duration (seconds)", f"{scan_duration:.4f}"])
         writer.writerow([])
 
         writer.writerow(["File", "Path", "Reason", "Severity"])
         for file, reasons, severity in findings:
-           reason_text = "; ".join(f"{cat} ({detail})" for cat, detail in reasons)
-        writer.writerow( os.path.basename(file), file, reason_text, severity)
+            reason_text = "; ".join(f"{cat} ({detail})" for cat, detail in reasons)
+            writer.writerow([os.path.basename(file), file, reason_text, severity])
 
     print(f"\nResults saved to {output_path}")
 
@@ -405,4 +409,4 @@ if __name__ == "__main__":
     # Save results to CSV
     if args.csv:
         output_path = join("results", args.csv)
-        save_csv(findings, output_path)
+        save_csv(findings, output_path, files_scanned, scan_duration)

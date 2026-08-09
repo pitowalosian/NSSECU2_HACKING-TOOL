@@ -1,11 +1,24 @@
-Total findings,6
-Sensitive extensions,4
-Sensitive filenames,2
+Files scanned,15
+Total findings,13
+Sensitive extensions,13
+Sensitive filenames,4
+Critical findings,2
+High findings,3
+Medium findings,4
+Low findings,1
+Scan duration (seconds),0.0008
 
-File,Path,Reason
-.env,C:\Users\Myka\Desktop\sensitive_test_target\.env,Sensitive extension
-database.bak,C:\Users\Myka\Desktop\sensitive_test_target\database.bak,Sensitive extension
-id_rsa.key,C:\Users\Myka\Desktop\sensitive_test_target\id_rsa.key,Sensitive extension
-users_backup.sql,C:\Users\Myka\Desktop\sensitive_test_target\users_backup.sql,Sensitive filename
-web.config,C:\Users\Myka\Desktop\sensitive_test_target\web.config,Sensitive filename
-api_key.pem,C:\Users\Myka\Desktop\sensitive_test_target\subdir\api_key.pem,Sensitive extension
+File,Path,Reason,Severity
+id_rsa.key,C:\Users\Myka\Desktop\sensitive_test_target\id_rsa.key,Sensitive extension (.key); Sensitive filename (id_rsa),CRITICAL
+api_key.pem,C:\Users\Myka\Desktop\sensitive_test_target\subdir\api_key.pem,Sensitive extension (.pem); Sensitive filename (api_key),CRITICAL
+.env,C:\Users\Myka\Desktop\sensitive_test_target\.env,Sensitive extension (.env),HIGH
+database.bak,C:\Users\Myka\Desktop\sensitive_test_target\database.bak,Sensitive extension (.bak); Sensitive filename (database),HIGH
+users_backup.sql,C:\Users\Myka\Desktop\sensitive_test_target\users_backup.sql,Sensitive extension (.sql),HIGH
+server.log,C:\Users\Myka\Desktop\sensitive_test_target\server.log,Sensitive extension (.log),MEDIUM
+settings.ini,C:\Users\Myka\Desktop\sensitive_test_target\settings.ini,Sensitive extension (.ini),MEDIUM
+report.csv,C:\Users\Myka\Desktop\sensitive_test_target\subdir\report.csv,Sensitive extension (.csv),MEDIUM
+web.config,C:\Users\Myka\Desktop\sensitive_test_target\web.config,Sensitive extension (.config); Sensitive filename (config),MEDIUM
+archive.zip,C:\Users\Myka\Desktop\sensitive_test_target\archive.zip,Sensitive extension (.zip),LOW
+mykeys.jks,C:\Users\Myka\Desktop\sensitive_test_target\mykeys.jks,Sensitive extension (.jks),NSR
+script.py,C:\Users\Myka\Desktop\sensitive_test_target\script.py,Sensitive extension (.py),NSR
+site.crt,C:\Users\Myka\Desktop\sensitive_test_target\site.crt,Sensitive extension (.crt),NSR
