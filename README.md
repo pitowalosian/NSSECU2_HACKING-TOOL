@@ -9,6 +9,7 @@ FINISHED:
 - sensitive filenames
 - sensitive extensions
 - specific extensions option
+- error handling for path dne
 
 ## Description
 A command-line tool that scans a **local folder** for potentially sensitive files that may contain private or important information. It checks files based on their extensions and filename keywords, such as `.env` files, database backups, configuration files, and other sensitive files.
