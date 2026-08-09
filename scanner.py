@@ -106,9 +106,23 @@ def display_results(path, findings):
     print("                      ~~!SCAN COMPLETE!~~")
     print("=====================================================================")
 #store findings in csv
-def save_csv(findings, output_path): 
+def save_csv(findings, output_path):
+    extension_count = 0
+    filename_count = 0
+
+    for file, reason in findings:
+        if reason == "Sensitive extension":
+            extension_count += 1
+        elif reason == "Sensitive filename":
+            filename_count += 1
+
     with open(output_path, 'w', newline='') as f:
         writer = csv.writer(f)
+        writer.writerow(["Total findings", len(findings)])
+        writer.writerow(["Sensitive extensions", extension_count])
+        writer.writerow(["Sensitive filenames", filename_count])
+        writer.writerow([])
+
         writer.writerow(["File", "Path", "Reason"])
         for file, reason in findings:
             writer.writerow([os.path.basename(file), file, reason])
@@ -126,18 +140,18 @@ if __name__ == "__main__":
                         type=lambda s: s.split(','),
                         default=None,
                         help='file extensions to scan, e.g. --ext .env,.key,.pem')
-    parser.add_argument('--curated',
+    parser.add_argument('--cur',
                         action='store_true',
                         help='use a shorter curated extensions wordlist instead of the full list')
-    parser.add_argument('--customExt',
+    parser.add_argument('--ce',
                         default=None,
                         help='path to a custom extensions wordlist file')
-    parser.add_argument('--customFilenames',
+    parser.add_argument('--cf',
                         default=None,
                         help='path to a custom sensitive filenames wordlist file')
-    parser.add_argument('--csvoutput',
+    parser.add_argument('--csv',
                         default=None,
-                        help='save results to a CSV file, e.g. --csvoutput results.csv')
+                        help='save results to a CSV file, e.g. --csv results.csv')
 
     args = parser.parse_args()
 
@@ -145,11 +159,11 @@ if __name__ == "__main__":
     if not exists(args.path):
         sys.exit(f"Error: Path {args.path} not found")
 
-    if args.customExt and not exists(args.customExt):
-        sys.exit(f"Error: Extensions wordlist {args.customExt} not found")
+    if args.ce and not exists(args.ce):
+        sys.exit(f"Error: Extensions wordlist {args.ce} not found")
 
-    if args.customFilenames and not exists(args.customFilenames):
-        sys.exit(f"Error: Filenames wordlist {args.customFilenames} not found")
+    if args.cf and not exists(args.cf):
+        sys.exit(f"Error: Filenames wordlist {args.cf} not found")
 
 
     print(f"Scanning {args.path} for sensitive files.\n\n")
@@ -157,15 +171,15 @@ if __name__ == "__main__":
     # Loading the wordlists
     if args.ext:
         ext_list = args.ext
-    elif args.customExt:
-        ext_list = load_wordlist(args.customExt)
-    elif args.curated:
+    elif args.ce:
+        ext_list = load_wordlist(args.ce)
+    elif args.cur:
         ext_list = load_wordlist("wordlists/extensions_curated_list.txt")
     else:
         ext_list = load_wordlist("wordlists/extensions_list.txt")
 
-    if args.customFilenames:
-        filename_list = load_wordlist(args.customFilenames)
+    if args.cf:
+        filename_list = load_wordlist(args.cf)
     else:
         filename_list = load_wordlist("wordlists/sensitive_filenames.txt")
 
@@ -175,7 +189,7 @@ if __name__ == "__main__":
     # Display the results
     display_results(args.path, findings)
 
-    # Save results to CSV 
-    if args.csvoutput:
-        output_path = join("results", args.csvoutput)
+    # Save results to CSV
+    if args.csv:
+        output_path = join("results", args.csv)
         save_csv(findings, output_path)
