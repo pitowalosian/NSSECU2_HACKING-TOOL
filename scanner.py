@@ -119,25 +119,42 @@ if __name__ == "__main__":
     parser.add_argument('--curated',
                         action='store_true',
                         help='use a shorter curated extensions wordlist instead of the full list')
+    parser.add_argument('--customExt',
+                        default=None,
+                        help='path to a custom extensions wordlist file')
+    parser.add_argument('--customFilenames',
+                        default=None,
+                        help='path to a custom sensitive filenames wordlist file')
 
     args = parser.parse_args()
 
     # Error handling
     if not exists(args.path):
         sys.exit(f"Error: Path {args.path} not found")
-        
-    
+
+    if args.customExt and not exists(args.customExt):
+        sys.exit(f"Error: Extensions wordlist {args.customExt} not found")
+
+    if args.customFilenames and not exists(args.customFilenames):
+        sys.exit(f"Error: Filenames wordlist {args.customFilenames} not found")
+
+
     print(f"Scanning {args.path} for sensitive files.\n\n")
 
     # Loading the wordlists
     if args.ext:
         ext_list = args.ext
+    elif args.customExt:
+        ext_list = load_wordlist(args.customExt)
     elif args.curated:
         ext_list = load_wordlist("wordlists/extensions_curated_list.txt")
     else:
         ext_list = load_wordlist("wordlists/extensions_list.txt")
 
-    filename_list = load_wordlist("wordlists/sensitive_filenames.txt")
+    if args.customFilenames:
+        filename_list = load_wordlist(args.customFilenames)
+    else:
+        filename_list = load_wordlist("wordlists/sensitive_filenames.txt")
 
     # Scanning
     findings = scan(args.path, ext_list, filename_list)
