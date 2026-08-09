@@ -15,7 +15,7 @@ FINISHED:
 ## Description
 A command-line tool that scans a **local folder** for potentially sensitive files that may contain private or important information. It checks files based on their extensions and filename keywords, such as `.env` files, database backups, configuration files, and other sensitive files.
 
-The tool also shows why each file was flagged, whether it was detected because of its file extension or its filename.
+The tool also shows why each file was flagged, whether it was detected because of its file extension or its filename, along with a severity rating.
 
 ## Purpose
 yada yada
@@ -23,12 +23,14 @@ yada yada
 ## Features
 - **Extension check**: flags files whose extension matches an entry in `wordlists/extensions_list.txt` (~2,400 entries).
 - **Filename keyword check**: flags files whose name contains a known sensitive keyword from `wordlists sensitive_filenames.txt` (e.g. `.env`, `.git`, `id_rsa`, `web.config`), even if the extension is not included in the extensions wordlist.
+- **Severity scoring**: each finding is rated CRITICAL, HIGH, MEDIUM, or LOW based on how sensitive its filename/extension typically is (e.g. private keys are CRITICAL, config files are MEDIUM). Results are sorted by severity, most critical first.
 - **Curated extensions list**: an optional, trimmed extensions wordlist (`wordlists/extensions_curated_list.txt`)
 -  **Custom wordlists**: you can point the scanner to your own wordlist files. 
 - **Labeled findings**: each result shows why it was flagged, either `Sensitive extension` or `Sensitive filename`, so it is clear which rule detected it.
 - **Inline extension list**: pass extensions directly on the command line without needing a wordlist file at all.
-- **CSV export**: save scan results to a CSV file (saved in the `results/` folder) 
-- **Formatted results summary**: displays the total number of findings, a breakdown between sensitive extensions and filenames, and a list of the flagged files.
+- **Case-insensitive matching**: extension and filename checks are not case-sensitive, so `CONFIG.PHP` and `config.php` are both caught.
+- **CSV export**: save scan results to a CSV file (saved in the `results/` folder, created automatically if it does not exist), including severity breakdown counts.
+- **Formatted results summary**: displays files scanned, total findings, a breakdown between sensitive extensions and filenames, a severity breakdown, scan duration, and a list of the flagged files.
 
 ## System Requirements
 - Python 3.8+
@@ -36,6 +38,7 @@ yada yada
 ## Installation
 1. Clone or download this repository.
 2. Ensure Python 3.8+ is installed (`python --version` or `py --version`).
+3. Mac/Linux users can run the tool using `filebuster.sh`. *(TODO: KARL please fill in what it does and how to run it)*
 
 ## Usage
 Run from inside the tool's root folder (required, since wordlist paths are relative to it):
