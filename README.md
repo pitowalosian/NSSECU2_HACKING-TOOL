@@ -49,10 +49,10 @@ python scanner.py --path [TARGET_DIRECTORY]
 |---|---|
 | `--path` | Directory to scan (default: current working directory) |
 | `--ext` | Comma-separated list of extensions to scan for, e.g. `--ext .env,.key,.pem` (overrides all extension wordlists) |
-| `--curated` | Use the shorter curated extensions wordlist instead of the full list |
-| `--customExt` | Path to a custom extensions wordlist file |
-| `--customFilenames` | Path to a custom sensitive filenames wordlist file |
-| `--csvoutput` | Save results to a CSV file inside the `results/` folder, e.g. `--csvoutput scan1.csv` |
+| `--cur` | Use the shorter curated extensions wordlist instead of the full list |
+| `--ce` | Path to a custom extensions wordlist file |
+| `--cf` | Path to a custom sensitive filenames wordlist file |
+| `--csv` | Save results to a CSV file inside the `results/` folder, e.g. `--csv scan1.csv` |
 
 ### Examples
 
@@ -63,7 +63,7 @@ python scanner.py --path "C:\Users\you\Documents\project"
 
 Scan using the shorter curated extensions list:
 ```bash
-python scanner.py --path "C:\Users\you\Documents\project" --curated
+python scanner.py --path "C:\Users\you\Documents\project" --cur
 ```
 
 Scan for specific extensions only:
@@ -73,12 +73,12 @@ python scanner.py --path "C:\Users\you\Documents\project" --ext .env,.key,.pem
 
 Use your own custom wordlists:
 ```bash
-python scanner.py --path "C:\Users\you\Documents\project" --customExt my_ext.txt --customFilenames my_keywords.txt
+python scanner.py --path "C:\Users\you\Documents\project" --ce my_ext.txt --cf my_keywords.txt
 ```
 
 Export results to CSV:
 ```bash
-python scanner.py --path "C:\Users\you\Documents\project" --curated --csvoutput scan_results.csv
+python scanner.py --path "C:\Users\you\Documents\project" --cur --csv scan_results.csv
 ```
 
 ## Testing Environment
