@@ -126,7 +126,9 @@ Filebuster only scans file names and extensions and does not scan file contents.
 yada yada
 
 ## Ethical Disclaimer
-This tool was developed for educational purposes only. It must only be used in authorized and controlled testing environments. Unauthorized testing against real systems, public websites, or third-party services is strictly prohibited.
+This tool was developed strictly for educational purposes as part of an academic course project. It is intended to help users understand how sensitive files can be identified through filename and extension analysis, within controlled and authorized environments only.
+
+Additionally, this tool must only be used on systems, folders, or devices that you own or have documented authorization to scan. Unauthorized use against real systems, public websites, third-party services, or any environment without clear permission is strictly prohibited and may violate laws. The developers of this tool accept no responsibility for misuse. 
 
 
 ## Group Members and Roles
