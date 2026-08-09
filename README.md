@@ -70,6 +70,10 @@ Run from inside the tool's root folder (required, since wordlist paths are relat
 ```bash
 python casefiler.py --path [TARGET_DIRECTORY]
 ```
+```bash
+ casefiler --path [TARGET_DIRECTORY]
+```
+
 
 ### Options
 
@@ -90,17 +94,17 @@ Scan a folder with the default extensions list:
 
 Scan for specific extensions only:
 ```bash
- casefiler.py --path "[file_path]" --ext .env,.key,.pem
+ casefiler --path "[file_path]" --ext .env,.key,.pem
 ```
 
 Use your own custom wordlists:
 ```bash
- casefiler.py --path "[file_path]" --ce my_ext.txt --cf my_keywords.txt
+ casefiler --path "[file_path]" --ce my_ext.txt --cf my_keywords.txt
 ```
 
 Export results to CSV:
 ```bash
-  casefiler.py --path "[file_path]" --csv scan_results.csv
+  casefiler --path "[file_path]" --csv scan_results.csv
 ```
 
 ## Testing Environment
