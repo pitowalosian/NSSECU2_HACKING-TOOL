@@ -120,6 +120,6 @@ Our original contribution is the custom scoring engine and recommendation system
 ## References
 
 Wordlists:
-- [Extensions List](https://gist.github.com/securifera/e7eed730cbe1ce43d0c29d7cd2d582f4)
+- [Extensions List](https://github.com/TrustMe00/senstives-files)
 - [Filename List](https://github.com/emadshanab/WordLists-20111129)
 - [CSV files in Python](https://www.geeksforgeeks.org/python/writing-csv-files-in-python/)

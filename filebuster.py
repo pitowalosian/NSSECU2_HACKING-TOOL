@@ -1,6 +1,6 @@
 import os, sys
 from os import walk
-from os.path import isfile, join, exists
+from os.path import join, exists
 import argparse
 import csv
 
@@ -17,16 +17,16 @@ def banner():
     print("Made by: Bendol, Camato, Chua, Lim, Obregon\n\n")
 
 def load_wordlist(filepath):
- """Read extensions from a file, one per line."""
- with open(filepath, 'r') as f:
-    wordlist = []
+    """Read extensions from a file, one per line."""
+    with open(filepath, 'r') as f:
+        wordlist = []
 
-    for line in f:
-        stripped = line.strip()
-        if stripped:
-            wordlist.append(stripped)
+        for line in f:
+            stripped = line.strip()
+            if stripped:
+                wordlist.append(stripped)
 
-    return wordlist
+        return wordlist
 
 def is_sensitive(filename, ext_list):
     """Return True if filename has a sensitive extension."""
@@ -51,6 +51,7 @@ def is_sensitive_filename(filename, sensitive_list):
     return False
         
 def scan(path, ext_list, filename_list):
+    """Scan directory for files with sensitive extensions or filenames"""
     
     sensitive_files = []
 
@@ -78,7 +79,7 @@ def display_results(path, findings):
 
     # Results
     print("=====================================================================")
-    print("                              SCAN RESULTS")
+    print("                            SCAN RESULTS")
     print("=====================================================================")
 
     print(f"\nTarget:")
@@ -89,22 +90,23 @@ def display_results(path, findings):
     print(f"Sensitive filenames: {filename_count}")
 
     print("\n=====================================================================")
-    print("SENSITIVE FILES")
+    print("                           DETECTED FILES")
     print("=====================================================================")
 
     if findings:
         for i, (file, reason) in enumerate(findings, start=1):
             filename = os.path.basename(file)
 
-            print(f"\n[{i}] {reason}")
+            print(f"[{i}] {reason}")
             print(f"    File: {filename}")
             print(f"    Path: {file}")
     else:
         print("\nNo sensitive files found.")
 
-    print("\n" + "=====================================================================")
-    print("                      ~~!SCAN COMPLETE!~~")
+    print("\n=====================================================================")
+    print("                        ~~! SCAN COMPLETE !~~")
     print("=====================================================================")
+
 #store findings in csv
 def save_csv(findings, output_path):
     extension_count = 0
@@ -134,15 +136,12 @@ if __name__ == "__main__":
     banner()
     parser = argparse.ArgumentParser(description='Choose directory to scan', usage='%(prog)s --path [PATH]')
     parser.add_argument('--path',
-                      default=os.getcwd(),
-                      help='directory to scan (default: current directory)') # default scan current directory
+                        default=os.getcwd(),
+                        help='directory to scan (default: current directory)')
     parser.add_argument('--ext',
                         type=lambda s: s.split(','),
                         default=None,
                         help='file extensions to scan, e.g. --ext .env,.key,.pem')
-    parser.add_argument('--cur',
-                        action='store_true',
-                        help='use a shorter curated extensions wordlist instead of the full list')
     parser.add_argument('--ce',
                         default=None,
                         help='path to a custom extensions wordlist file')
@@ -173,15 +172,13 @@ if __name__ == "__main__":
         ext_list = args.ext
     elif args.ce:
         ext_list = load_wordlist(args.ce)
-    elif args.cur:
-        ext_list = load_wordlist("wordlists/extensions_curated_list.txt")
     else:
         ext_list = load_wordlist("wordlists/extensions_list.txt")
 
     if args.cf:
         filename_list = load_wordlist(args.cf)
     else:
-        filename_list = load_wordlist("wordlists/sensitive_filenames.txt")
+        filename_list = load_wordlist("wordlists/filenames.txt")
 
     # Scanning
     findings = scan(args.path, ext_list, filename_list)
