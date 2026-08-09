@@ -46,7 +46,7 @@ python scanner.py --path [TARGET_DIRECTORY]
 
 ### Options
 
-| Flag | Description |
+| Options | Description |
 |---|---|
 | `--path` | Directory to scan (default: current working directory) |
 | `--ext` | Comma-separated list of extensions to scan for, e.g. `--ext .env,.key,.pem` (overrides all extension wordlists) |
