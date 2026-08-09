@@ -176,7 +176,7 @@ def get_severity(filename):
             return "LOW"
 
     # Default severity for files that don't match any of the predefined severity terms
-    return "LOW"
+    return "NSR" # no severity rating
 
 def scan(path, ext_list, filename_list):
     """
@@ -206,7 +206,8 @@ def scan(path, ext_list, filename_list):
         "CRITICAL": 0,
         "HIGH": 1,
         "MEDIUM": 2,
-        "LOW": 3
+        "LOW": 3,
+        "NSR": 4
     }
 
     sensitive_files.sort (
