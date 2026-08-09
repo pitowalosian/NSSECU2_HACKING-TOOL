@@ -117,14 +117,19 @@ if __name__ == "__main__":
                         default=None,
                         required=False,
                         help='file extensions to scan, e.g. --ext .env,.key,.pem')
-    
+    parser.add_argument('--curated',
+                        action='store_true',
+                        help='use a shorter curated extensions wordlist instead of the full list')
+
     args = parser.parse_args()
 
     print(f"Scanning {args.path} for sensitive files.\n\n")
 
     # Loading the wordlists
-    if (args.ext):
+    if args.ext:
         ext_list = args.ext
+    elif args.curated:
+        ext_list = load_wordlist("wordlists/extensions_curated_list.txt")
     else:
         ext_list = load_wordlist("wordlists/extensions_list.txt")
 
