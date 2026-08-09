@@ -1,6 +1,6 @@
-import os
+import os, sys
 from os import walk
-from os.path import isfile, join
+from os.path import isfile, join, exists
 import argparse
 
 def banner():
@@ -81,7 +81,7 @@ def display_results(path, findings):
     print("=====================================================================")
 
     print(f"\nTarget:")
-    print(f"{args.path}")
+    print(f"{path}")
 
     print(f"\nTotal findings: {len(findings)}")
     print(f"Sensitive extensions: {extension_count}")
@@ -115,7 +115,6 @@ if __name__ == "__main__":
     parser.add_argument('--ext',
                         type=lambda s: s.split(','),
                         default=None,
-                        required=False,
                         help='file extensions to scan, e.g. --ext .env,.key,.pem')
     parser.add_argument('--curated',
                         action='store_true',
@@ -123,6 +122,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    # Error handling
+    if not exists(args.path):
+        sys.exit(f"Error: Path {args.path} not found")
+        
+    
     print(f"Scanning {args.path} for sensitive files.\n\n")
 
     # Loading the wordlists
