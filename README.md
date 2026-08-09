@@ -22,17 +22,64 @@ yada yada
 ## Features
 - **Extension check**: flags files whose extension matches an entry in `wordlists/extensions_list.txt` (~2,400 entries).
 - **Filename keyword check**: flags files whose name contains a known sensitive keyword from `wordlists sensitive_filenames.txt` (e.g. `.env`, `.git`, `id_rsa`, `web.config`), even if the extension is not included in the extensions wordlist.
+- **Curated extensions list**: an optional, trimmed extensions wordlist (`wordlists/extensions_curated_list.txt`)
+-  **Custom wordlists**: you can point the scanner to your own wordlist files. 
 - **Labeled findings**: each result shows why it was flagged, either `Sensitive extension` or `Sensitive filename`, so it is clear which rule detected it.
+- **Inline extension list**: pass extensions directly on the command line without needing a wordlist file at all.
+- **CSV export**: save scan results to a CSV file (saved in the `results/` folder) 
 - **Formatted results summary**: displays the total number of findings, a breakdown between sensitive extensions and filenames, and a list of the flagged files.
 
 ## System Requirements
 - Python 3.8+
 
 ## Installation
-yada yada
+1. Clone or download this repository.
+2. Ensure Python 3.8+ is installed (`python --version` or `py --version`).
 
 ## Usage
-yada yada
+Run from inside the tool's root folder (required, since wordlist paths are relative to it):
+
+```bash
+python scanner.py --path [TARGET_DIRECTORY]
+```
+
+### Options
+
+| Flag | Description |
+|---|---|
+| `--path` | Directory to scan (default: current working directory) |
+| `--ext` | Comma-separated list of extensions to scan for, e.g. `--ext .env,.key,.pem` (overrides all extension wordlists) |
+| `--curated` | Use the shorter curated extensions wordlist instead of the full list |
+| `--customExt` | Path to a custom extensions wordlist file |
+| `--customFilenames` | Path to a custom sensitive filenames wordlist file |
+| `--csvoutput` | Save results to a CSV file inside the `results/` folder, e.g. `--csvoutput scan1.csv` |
+
+### Examples
+
+Scan a folder with the default (full) extensions list:
+```bash
+python scanner.py --path "C:\Users\you\Documents\project"
+```
+
+Scan using the shorter curated extensions list:
+```bash
+python scanner.py --path "C:\Users\you\Documents\project" --curated
+```
+
+Scan for specific extensions only:
+```bash
+python scanner.py --path "C:\Users\you\Documents\project" --ext .env,.key,.pem
+```
+
+Use your own custom wordlists:
+```bash
+python scanner.py --path "C:\Users\you\Documents\project" --customExt my_ext.txt --customFilenames my_keywords.txt
+```
+
+Export results to CSV:
+```bash
+python scanner.py --path "C:\Users\you\Documents\project" --curated --csvoutput scan_results.csv
+```
 
 ## Testing Environment
 This tool was tested against:
@@ -74,3 +121,4 @@ Our original contribution is the custom scoring engine and recommendation system
 Wordlists:
 - [Extensions List](https://gist.github.com/securifera/e7eed730cbe1ce43d0c29d7cd2d582f4)
 - [Filename List](https://github.com/emadshanab/WordLists-20111129)
+- [CSV files in Python](https://www.geeksforgeeks.org/python/writing-csv-files-in-python/)
