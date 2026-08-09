@@ -23,8 +23,10 @@ yada yada
 - **Extension check**: flags files whose extension matches an entry in `wordlists/extensions_list.txt` (~2,400 entries).
 - **Filename keyword check**: flags files whose name contains a known sensitive keyword from `wordlists sensitive_filenames.txt` (e.g. `.env`, `.git`, `id_rsa`, `web.config`), even if the extension is not included in the extensions wordlist.
 - **Curated extensions list**: an optional, trimmed extensions wordlist (`wordlists/extensions_curated_list.txt`)
+-  **Custom wordlists**: you can point the scanner to your own wordlist files. 
 - **Labeled findings**: each result shows why it was flagged, either `Sensitive extension` or `Sensitive filename`, so it is clear which rule detected it.
 - **Inline extension list**: pass extensions directly on the command line without needing a wordlist file at all.
+- **CSV export**: save scan results to a CSV file (saved in the `results/` folder) 
 - **Formatted results summary**: displays the total number of findings, a breakdown between sensitive extensions and filenames, and a list of the flagged files.
 
 ## System Requirements
