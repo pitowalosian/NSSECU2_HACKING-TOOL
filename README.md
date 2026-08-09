@@ -59,27 +59,27 @@ python scanner.py --path [TARGET_DIRECTORY]
 
 Scan a folder with the default (full) extensions list:
 ```bash
-python scanner.py --path "C:\Users\you\Documents\project"
+python scanner.py --path "[file_path]"
 ```
 
 Scan using the shorter curated extensions list:
 ```bash
-python scanner.py --path "C:\Users\you\Documents\project" --cur
+python scanner.py --path "[file_path]" --cur
 ```
 
 Scan for specific extensions only:
 ```bash
-python scanner.py --path "C:\Users\you\Documents\project" --ext .env,.key,.pem
+python scanner.py --path "[file_path]" --ext .env,.key,.pem
 ```
 
 Use your own custom wordlists:
 ```bash
-python scanner.py --path "C:\Users\you\Documents\project" --ce my_ext.txt --cf my_keywords.txt
+python scanner.py --path "[file_path]" --ce my_ext.txt --cf my_keywords.txt
 ```
 
 Export results to CSV:
 ```bash
-python scanner.py --path "C:\Users\you\Documents\project" --cur --csv scan_results.csv
+python scanner.py --path "[file_path]" --cur --csv scan_results.csv
 ```
 
 ## Testing Environment
