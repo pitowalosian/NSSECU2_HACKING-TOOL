@@ -30,26 +30,29 @@ def load_wordlist(filepath):
         return wordlist
 
 def is_sensitive(filename, ext_list):
-    """Return True if filename has a sensitive extension."""
-
+    """Return a list of matched sensitive extensions."""
     name_lower = filename.lower()
-
+    matches = []
     for ext in ext_list:
-        if name_lower.endswith(ext.lower()):
-            return True
+        ext = ext.strip().lower()
+        if not ext.startswith('.'):
+            ext = '.' + ext
+        if name_lower.endswith(ext):
+            matches.append(("Sensitive extension", ext))
+    return matches
 
-    return False
- 
-def is_sensitive_filename(filename, sensitive_list):
-    """Return true if filename contains a sensitive keyword."""
-
+def is_sensitive_filename(filename, filename_list):
+    """Return a list of matched sensitive keywords."""
     name_lower = filename.lower()
-
-    for sensitive in sensitive_list:
-        if sensitive.lower() in name_lower:
-            return True
-
-    return False
+    matches = []
+    for keyword in filename_list:
+        keyword = keyword.strip().lower()
+        if keyword.startswith('.'):
+            continue
+        if keyword.lower() == name_lower:
+            matches.append(("Sensitive filename", keyword))
+            
+    return matches
 
 def get_severity(filename):
     """
@@ -188,35 +191,13 @@ def scan(path, ext_list, filename_list):
             fullpath = join(dirpath, f)
             files_scanned += 1
 
-            if is_sensitive(f, ext_list):
+            reasons = []
+            reasons.extend(is_sensitive(f, ext_list))
+            reasons.extend(is_sensitive_filename(f, filename_list))
+
+            if reasons:
                 severity = get_severity(f)
-
-                # Find specific extension that matched
-                matched_extension = None
-
-                for ext in ext_list:
-                    if f.lower().endswith(ext.lower()):
-                        matched_extension = ext.lower()
-                        break
-
-                reason = f"Sensitive extension ({matched_extension})"
-
-                sensitive_files.append((fullpath, reason, severity))
-
-            elif is_sensitive_filename(f, filename_list):
-                severity = get_severity(f)
-
-                # Find specific filename keyword that matched
-                matched_keyword = None
-
-                for keyword in filename_list:
-                    if keyword.lower() in f.lower():
-                        matched_keyword = keyword.lower()
-                        break
-
-                reason = f'Sensitive filename keyword ("{matched_keyword}")'
-
-                sensitive_files.append((fullpath, reason, severity))
+                sensitive_files.append((fullpath, reasons, severity))
 
     # To order output based on severity
     severity_order = {
@@ -244,10 +225,10 @@ def display_results(path, findings, files_scanned, scan_duration):
     medium_count = 0
     low_count = 0
 
-    for file, reason, severity in findings:
-        if reason.startswith("Sensitive extension"):
+    for file, reasons, severity in findings:
+        if any(cat == "Sensitive extension" for cat, _ in reasons):
             extension_count += 1
-        elif reason.startswith("Sensitive filename"):
+        if any(cat == "Sensitive filename" for cat, _ in reasons):
             filename_count += 1
 
         if severity == "CRITICAL":
@@ -288,13 +269,14 @@ def display_results(path, findings, files_scanned, scan_duration):
     print("=====================================================================")
 
     if findings:
-        for i, (file, reason, severity) in enumerate(findings, start=1):
+        for i, (file, reasons, severity) in enumerate(findings, start=1):
             filename = os.path.basename(file)
 
             print(f"\n[{i}] {severity}")
             print(f"    File: {filename}")
             print(f"    Path: {file}")
-            print(f"    Reason: {reason}")
+            for cat, detail in reasons:
+                print(f"    Reason: {cat} ({detail})")
     else:
         print("\nNo sensitive files found.")
 
@@ -302,8 +284,9 @@ def display_results(path, findings, files_scanned, scan_duration):
     print("                        ~~! SCAN COMPLETE !~~")
     print("=====================================================================")
 
-#store findings in csv
+
 def save_csv(findings, output_path):
+    """Store findings in a CSV file"""
     extension_count = 0
     filename_count = 0
 
@@ -313,9 +296,9 @@ def save_csv(findings, output_path):
     low_count = 0
 
     for file, reason, severity in findings:
-        if reason.startswith("Sensitive extension"):
+        if any(cat == "Sensitive extension" for cat, _ in reasons):
             extension_count += 1
-        elif reason.startswith("Sensitive filename"):
+        if any(cat == "Sensitive filename" for cat, _ in reasons):
             filename_count += 1
 
         if severity == "CRITICAL":
@@ -343,8 +326,9 @@ def save_csv(findings, output_path):
         writer.writerow([])
 
         writer.writerow(["File", "Path", "Reason", "Severity"])
-        for file, reason, severity in findings:
-            writer.writerow([os.path.basename(file), file, reason, severity])
+        for file, reasons, severity in findings:
+           reason_text = "; ".join(f"{cat} ({detail})" for cat, detail in reasons)
+        writer.writerow( os.path.basename(file), file, reason_text, severity)
 
     print(f"\nResults saved to {output_path}")
 
@@ -354,19 +338,24 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Choose directory to scan', usage='%(prog)s --path [PATH]')
     parser.add_argument('--path',
                         default=os.getcwd(),
+                        metavar='[TARGET_DIR]',
                         help='directory to scan (default: current directory)')
     parser.add_argument('--ext',
                         type=lambda s: s.split(','),
                         default=None,
+                        metavar='[SPECIFIC_EXT]',
                         help='file extensions to scan, e.g. --ext .env,.key,.pem')
     parser.add_argument('--ce',
                         default=None,
-                        help='path to a custom extensions wordlist file')
+                        metavar='[EXT_FILE]',
+                        help='path to a custom extensions wordlist file, e.g. --ce my_ext.txt')
     parser.add_argument('--cf',
                         default=None,
-                        help='path to a custom sensitive filenames wordlist file')
+                        metavar='[KEYWORDS_FILE]',
+                        help='path to a custom sensitive filenames wordlist file,  e.g. --cf my_keywords.txt')
     parser.add_argument('--csv',
                         default=None,
+                        metavar='[OUTPUT.csv]',
                         help='save results to a CSV file, e.g. --csv results.csv')
 
     args = parser.parse_args()

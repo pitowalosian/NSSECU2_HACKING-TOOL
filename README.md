@@ -144,7 +144,6 @@ Example:
 
 Our original contribution is the custom scoring engine and recommendation system that evaluates login security based on failed attempts, response messages, lockout behavior, and rate limiting.
 
-
 ## References
 
 Wordlists:
