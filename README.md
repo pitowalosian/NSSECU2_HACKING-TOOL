@@ -129,13 +129,13 @@ This tool was developed for educational purposes only. It must only be used in a
 
 
 ## Group Members and Roles
-| Name | Role |
-|---|---|
-| Bendol, Trisha | *(yada yada)* |
-| Camato, Karl | *(yada yada)* |
-| Chua, Myka | *(yada yada)* |
-| Lim, Julienne | *(yada yada)* |
-| Obregon, Sian | *(yada yada)* |
+| Name | Role                               |
+|---|------------------------------------|
+| Bendol, Trisha | *Developer*                        |
+| Camato, Karl | *Developer*                        |
+| Chua, Myka | *Developer*                        |
+| Lim, Julienne | *Developer, Presentation Designer* |
+| Obregon, Sian | *Developer*                        |
 
 ## Original Contribution
 Each group must clearly state what they personally built and what makes the tool unique.
