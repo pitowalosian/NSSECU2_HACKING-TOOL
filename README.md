@@ -112,9 +112,16 @@ Export results to CSV:
 ```
 
 ## Testing Environment
-This tool was tested against:
+This tool was tested on the following operating systems:
+- Windows 11
+- macOS
+- Linux
 
-yada yada
+A test folder that contains the following files:
+- Sensitive file name
+- Sensitive extension
+- Both sensitive file name and extension
+- Neither sensitive file name or extens
 
 ## Sample Output
 yada yada
