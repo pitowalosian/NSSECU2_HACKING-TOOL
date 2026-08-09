@@ -37,20 +37,32 @@ yada yada
 
 ### Windows
 Run the tool using Python:
-    python filebuster.py --help
+```bash
+python casefiler.py --help
+```
+
+> **Note:** if `python` is not recognized or fails to run, your PATH may not be configured correctly. You'll need to fix this manually (e.g. via "Edit environment variables for your account" in Windows Settings), or use the `py` launcher instead (`py casefiler.py --help`) as a workaround.
 
 You can also use the included batch file:
-    casefiler.bat --help
+```bash
+casefiler.bat --help
+```
 
 ### Linux/macOS
 make the shell script executable:
-    chmod +x casefiler.sh
+```bash
+chmod +x casefiler.sh
+```
 
 Run the tool using Python:
-    python3 casefiler.py --help
+```bash
+python3 casefiler.py --help
+```
 
 Or use the included shell script:
-    ./casefiler.sh --help
+```bash
+./casefiler.sh --help
+```
 
 ## Usage
 Run from inside the tool's root folder (required, since wordlist paths are relative to it):
