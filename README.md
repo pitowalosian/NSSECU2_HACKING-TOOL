@@ -6,7 +6,8 @@ A command-line tool that scans a **local folder** for potentially sensitive file
 The tool also shows why each file was flagged, whether it was detected because of its file extension or its filename, along with a severity rating.
 
 ## Purpose
-yada yada
+This tool helps find sensitive files that may have been accidentally exposed in a local folder. Instead of checking files manually, users can run one scan to find files that may contain passwords, keys, or private data. It also gives each file a severity rating to help users identify which files need attention first. 
+
 
 ## User Manual
 See the full user manual here  [User Manual]()
