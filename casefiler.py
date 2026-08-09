@@ -340,7 +340,7 @@ def save_csv(findings, output_path, files_scanned, scan_duration):
     print(f"\nResults saved to {output_path}")
 
 if __name__ == "__main__":
-    # to run: python scanner.py --path [insert path]
+    # to run: python casefiler.py --path [insert path]
     banner()
     parser = argparse.ArgumentParser(description='Choose directory to scan', usage='%(prog)s --path [PATH]')
     parser.add_argument('--path',
