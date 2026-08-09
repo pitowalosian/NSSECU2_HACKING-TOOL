@@ -124,7 +124,8 @@ A test folder that contains the following files:
 - Neither sensitive file name or extens
 
 ## Sample Output
-yada yada
+<img width="1192" height="1389" alt="image" src="https://github.com/user-attachments/assets/2830f17e-3561-4535-a574-54c847b0c3ed" />
+
 
 ## Limitations
 Filebuster only scans file names and extensions and does not scan file contents. Files containing sensitive data may still be flagged as non-sensitive and vice versa. Additionally, severity ratings are hardcoded into the program. Severity ratings should only be used to get an initial idea of the files, and should not be taken as objective fact. Using a different wordlist could show missing severity ratings. 
