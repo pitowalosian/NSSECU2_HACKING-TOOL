@@ -3,6 +3,7 @@ from os import walk
 from os.path import join, exists
 import argparse
 import csv
+import time
 
 def banner():
     print("""
@@ -24,7 +25,7 @@ def load_wordlist(filepath):
         for line in f:
             stripped = line.strip()
             if stripped:
-                wordlist.append(stripped)
+                wordlist.append(stripped.lower())
 
         return wordlist
 
@@ -34,7 +35,7 @@ def is_sensitive(filename, ext_list):
     name_lower = filename.lower()
 
     for ext in ext_list:
-        if name_lower.endswith(ext):
+        if name_lower.endswith(ext.lower()):
             return True
 
     return False
@@ -45,39 +46,198 @@ def is_sensitive_filename(filename, sensitive_list):
     name_lower = filename.lower()
 
     for sensitive in sensitive_list:
-        if sensitive in name_lower:
+        if sensitive.lower() in name_lower:
             return True
 
     return False
-        
+
+def get_severity(filename):
+    """
+    Determine the potential severity of a finding based on its filename/extension.
+
+    Severity priority:
+    CRITICAL --> HIGH --> MEDIUM --> LOW
+    """
+
+    name_lower = filename.lower()
+
+    # CRITICAL: Private keys/authentication-related secrets
+    critical_terms = [
+        # Private key extensions
+        ".key",
+        ".pem",
+        ".pfx",
+        ".p12",
+        ".ppk",
+
+        # Private key filenames
+        "id_rsa",
+        "id_dsa",
+        "id_ecdsa",
+        "id_ed25519",
+        "private_key",
+        "authorized_keys",
+
+        # Authentication secrets
+        "api_key",
+        "apikey",
+        "secret",
+        "token"
+    ]
+
+    # HIGH: Credentials, databases/backups
+    high_terms = [
+        # Credential-related files
+        ".env",
+        ".psw",
+        ".pwd",
+        ".pgpass",
+        ".netrc",
+        "password",
+        "passwd",
+        "credential",
+        "creds",
+
+        # Database files
+        ".sql",
+        ".sqlite",
+        ".sqlite3",
+        ".db",
+        ".mdb",
+        ".accdb",
+
+        # Database backups / dumps
+        ".bak",
+        ".dump",
+        ".dmp",
+        "database",
+        "backup"
+    ]
+
+    # MEDIUM: Configuration and potentially sensitive data files
+    medium_terms = [
+        # Configuration files
+        ".config",
+        ".ini",
+        ".conf",
+        ".cfg",
+        ".json",
+        ".xml",
+        ".yaml",
+        ".yml",
+        ".toml",
+        ".properties",
+
+        # Server/security configuration
+        ".htpasswd",
+        ".htaccess",
+
+        # Potentially sensitive data/log files
+        ".csv",
+        ".log"
+    ]
+
+    # LOW: Files that could have useful/sensitive information, but generally less indicative of exposed secrets
+    low_terms = [
+        ".pdf",
+        ".xls",
+        ".xlsx",
+        ".doc",
+        ".docx",
+        ".txt",
+        ".zip",
+        ".rar",
+        ".tar",
+        ".7z",
+        ".gz",
+    ]
+
+    # To check each severity category
+
+    for term in critical_terms:
+        if term in name_lower:
+            return "CRITICAL"
+
+    for term in high_terms:
+        if term in name_lower:
+            return "HIGH"
+
+    for term in medium_terms:
+        if term in name_lower:
+            return "MEDIUM"
+
+    for term in low_terms:
+        if term in name_lower:
+            return "LOW"
+
+    # Default severity for files that don't match any of the predefined severity terms
+    return "LOW"
+
 def scan(path, ext_list, filename_list):
-    """Scan directory for files with sensitive extensions or filenames"""
+    """
+    Scan directory for files with sensitive extensions or filenames
+
+    Returns findings (list of detected files) and files_scanned (total number of files examined)
+    """
     
     sensitive_files = []
+    files_scanned = 0
 
     for (dirpath, dirnames, filenames) in walk(path):
         for f in filenames:
             fullpath = join(dirpath, f)
+            files_scanned += 1
+
             if is_sensitive(f, ext_list):
-                sensitive_files.append((fullpath, "Sensitive extension"))
+                severity = get_severity(f)
+                sensitive_files.append((fullpath, "Sensitive extension", severity))
 
             elif is_sensitive_filename(f, filename_list):
-                sensitive_files.append((fullpath, "Sensitive filename"))
+                severity = get_severity(f)
+                sensitive_files.append((fullpath, "Sensitive filename", severity))
 
-    return sensitive_files
+    # To order output based on severity
+    severity_order = {
+        "CRITICAL": 0,
+        "HIGH": 1,
+        "MEDIUM": 2,
+        "LOW": 3
+    }
 
-def display_results(path, findings):
+    sensitive_files.sort (
+        key = lambda item: (
+            severity_order[item[2]], item[0].lower()
+        )
+    )
+
+    return sensitive_files, files_scanned
+
+def display_results(path, findings, files_scanned, scan_duration):
     # For findings
     extension_count = 0
     filename_count = 0
 
-    for file, reason in findings:
+    critical_count = 0
+    high_count = 0
+    medium_count = 0
+    low_count = 0
+
+    for file, reason, severity in findings:
         if reason == "Sensitive extension":
             extension_count += 1
         elif reason == "Sensitive filename":
             filename_count += 1
 
-    # Results
+        if severity == "CRITICAL":
+            critical_count += 1
+        elif severity == "HIGH":
+            high_count += 1
+        elif severity == "MEDIUM":
+            medium_count += 1
+        elif severity == "LOW":
+            low_count += 1
+
+    # Results (with statistics)
     print("=====================================================================")
     print("                            SCAN RESULTS")
     print("=====================================================================")
@@ -85,21 +245,34 @@ def display_results(path, findings):
     print(f"\nTarget:")
     print(f"{path}")
 
+    print(f"\nFiles scanned: {files_scanned}")
     print(f"\nTotal findings: {len(findings)}")
+
+    print("\nDetection methods:")
     print(f"Sensitive extensions: {extension_count}")
     print(f"Sensitive filenames: {filename_count}")
+
+    print("\nPotential severity:")
+    print(f"CRITICAL: {critical_count}")
+    print(f"HIGH:     {high_count}")
+    print(f"MEDIUM:   {medium_count}")
+    print(f"LOW:      {low_count}")
+
+    print(f"\nScan duration: {scan_duration:.4f} seconds")
+
 
     print("\n=====================================================================")
     print("                           DETECTED FILES")
     print("=====================================================================")
 
     if findings:
-        for i, (file, reason) in enumerate(findings, start=1):
+        for i, (file, reason, severity) in enumerate(findings, start=1):
             filename = os.path.basename(file)
 
-            print(f"[{i}] {reason}")
+            print(f"\n[{i}] {severity}")
             print(f"    File: {filename}")
             print(f"    Path: {file}")
+            print(f"    Reason: {reason}")
     else:
         print("\nNo sensitive files found.")
 
@@ -112,22 +285,44 @@ def save_csv(findings, output_path):
     extension_count = 0
     filename_count = 0
 
-    for file, reason in findings:
+    critical_count = 0
+    high_count = 0
+    medium_count = 0
+    low_count = 0
+
+    for file, reason, severity in findings:
         if reason == "Sensitive extension":
             extension_count += 1
         elif reason == "Sensitive filename":
             filename_count += 1
+
+        if severity == "CRITICAL":
+            critical_count += 1
+        elif severity == "HIGH":
+            high_count += 1
+        elif severity == "MEDIUM":
+            medium_count += 1
+        elif severity == "LOW":
+            low_count += 1
+
+    # To create directory automatically if it doesn't exist yet
+    os.makedirs(os.path.dirname(output_path), exist_ok = True)
 
     with open(output_path, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(["Total findings", len(findings)])
         writer.writerow(["Sensitive extensions", extension_count])
         writer.writerow(["Sensitive filenames", filename_count])
+
+        writer.writerow(["Critical findings", critical_count])
+        writer.writerow(["High findings", high_count])
+        writer.writerow(["Medium findings", medium_count])
+        writer.writerow(["Low findings", low_count])
         writer.writerow([])
 
-        writer.writerow(["File", "Path", "Reason"])
-        for file, reason in findings:
-            writer.writerow([os.path.basename(file), file, reason])
+        writer.writerow(["File", "Path", "Reason", "Severity"])
+        for file, reason, severity in findings:
+            writer.writerow([os.path.basename(file), file, reason, severity])
 
     print(f"\nResults saved to {output_path}")
 
@@ -180,11 +375,18 @@ if __name__ == "__main__":
     else:
         filename_list = load_wordlist("wordlists/filenames.txt")
 
+    # Start scan timer
+    start_time = time.perf_counter()
+
     # Scanning
-    findings = scan(args.path, ext_list, filename_list)
+    findings, files_scanned = scan(args.path, ext_list, filename_list)
+
+    # Stop scan timer
+    end_time = time.perf_counter()
+    scan_duration = end_time - start_time
 
     # Display the results
-    display_results(args.path, findings)
+    display_results(args.path, findings, files_scanned, scan_duration)
 
     # Save results to CSV
     if args.csv:

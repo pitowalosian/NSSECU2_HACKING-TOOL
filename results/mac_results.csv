@@ -1,0 +1,17 @@
+Total findings,8
+Sensitive extensions,7
+Sensitive filenames,1
+Critical findings,0
+High findings,0
+Medium findings,5
+Low findings,3
+
+File,Path,Reason,Severity
+misc.xml,./.idea/misc.xml,Sensitive extension,MEDIUM
+modules.xml,./.idea/modules.xml,Sensitive extension,MEDIUM
+vcs.xml,./.idea/vcs.xml,Sensitive extension,MEDIUM
+workspace.xml,./.idea/workspace.xml,Sensitive extension,MEDIUM
+results.csv,./results/results.csv,Sensitive extension,MEDIUM
+config,./.git/config,Sensitive filename,LOW
+filebuster.py,./filebuster.py,Sensitive extension,LOW
+filebuster.sh,./filebuster.sh,Sensitive extension,LOW
