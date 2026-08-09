@@ -34,11 +34,36 @@ yada yada
 
 ## System Requirements
 - Python 3.8+
+- Windows, Linux or macOS
 
 ## Installation
 1. Clone or download this repository.
-2. Ensure Python 3.8+ is installed (`python --version` or `py --version`).
-3. Mac/Linux users can run the tool using `filebuster.sh`. *(TODO: KARL please fill in what it does and how to run it)*
+2. Ensure Python 3.8+ is installed.
+
+| Windows     | py --version      |
+|-------------|-------------------|
+| Linux/macOS | python3 --version |
+
+3. Open a terminal and navigate to the tool's root folder:
+    - cd path/to/NSSECU2_HACKING-TOOL
+4. No additional Python packages are required. The tool only uses Python's built-in libraries.
+
+### Windows
+Run the tool using Python:
+    python filebuster.py --help
+
+You can also use the included batch file:
+    filebuster.bat --help
+
+### Linux/macOS
+make the shell script executable:
+    chmod +x filebuster.sh
+
+Run the tool using Python:
+    python3 filebuster.py --help
+
+Or use the included shell script:
+    ./filebuster.sh --help
 
 ## Usage
 Run from inside the tool's root folder (required, since wordlist paths are relative to it):
