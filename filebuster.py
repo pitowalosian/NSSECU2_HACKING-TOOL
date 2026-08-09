@@ -1,6 +1,8 @@
-import os, sys
+import os
 from os import walk
 from os.path import join, exists
+import sys
+import re
 import argparse
 import csv
 import time
@@ -49,7 +51,7 @@ def is_sensitive_filename(filename, filename_list):
         keyword = keyword.strip().lower()
         if keyword.startswith('.'):
             continue
-        if keyword.lower() == name_lower:
+        if re.search(rf'\b{re.escape(keyword)}\b', name_lower):
             matches.append(("Sensitive filename", keyword))
             
     return matches
