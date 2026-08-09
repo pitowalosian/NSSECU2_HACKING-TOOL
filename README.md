@@ -1,16 +1,21 @@
 # Sensitive File Scanner
 
 ## Description
-A tool that checks a **--** for exposed sensitive files.
+A command-line tool that scans a **local folder** for potentially sensitive files that may contain private or important information. It checks files based on their extensions and filename keywords, such as `.env` files, database backups, configuration files, and other sensitive files.
+
+The tool also shows why each file was flagged, whether it was detected because of its file extension or its filename.
 
 ## Purpose
 yada yada
 
 ## Features
-yada yada
+- **Extension check**: flags files whose extension matches an entry in `wordlists/extensions_list.txt` (~2,400 entries).
+- **Filename keyword check**: flags files whose name contains a known sensitive keyword from `wordlists sensitive_filenames.txt` (e.g. `.env`, `.git`, `id_rsa`, `web.config`), even if the extension is not included in the extensions wordlist.
+- **Labeled findings**: each result shows why it was flagged, either `Sensitive extension` or `Sensitive filename`, so it is clear which rule detected it.
+- **Formatted results summary**: displays the total number of findings, a breakdown between sensitive extensions and filenames, and a list of the flagged files.
 
 ## System Requirements
-yada yada
+- Python 3.8+
 
 ## Installation
 yada yada
