@@ -1,10 +1,12 @@
+Files scanned,98
 Total findings,9
 Sensitive extensions,8
 Sensitive filenames,1
 Critical findings,0
 High findings,0
 Medium findings,6
-Low findings,3
+Low findings,0
+Scan duration (seconds),0.0316
 
 File,Path,Reason,Severity
 misc.xml,./.idea/misc.xml,Sensitive extension (.xml),MEDIUM
@@ -13,6 +15,6 @@ vcs.xml,./.idea/vcs.xml,Sensitive extension (.xml),MEDIUM
 workspace.xml,./.idea/workspace.xml,Sensitive extension (.xml),MEDIUM
 mac_results.csv,./results/mac_results.csv,Sensitive extension (.csv),MEDIUM
 results.csv,./results/results.csv,Sensitive extension (.csv),MEDIUM
-config,./.git/config,"Sensitive filename keyword (""config"")",LOW
-filebuster.py,./filebuster.py,Sensitive extension (.py),LOW
-filebuster.sh,./filebuster.sh,Sensitive extension (.sh),LOW
+config,./.git/config,Sensitive filename (config),NSR
+casefiler.py,./casefiler.py,Sensitive extension (.py),NSR
+casefiler.sh,./casefiler.sh,Sensitive extension (.sh),NSR
