@@ -85,22 +85,22 @@ python casefiler.py --path [TARGET_DIRECTORY]
 
 Scan a folder with the default extensions list:
 ```bash
-python casefiler.py --path "[file_path]"
+ casefiler --path "[file_path]"
 ```
 
 Scan for specific extensions only:
 ```bash
-python casefiler.py --path "[file_path]" --ext .env,.key,.pem
+ casefiler.py --path "[file_path]" --ext .env,.key,.pem
 ```
 
 Use your own custom wordlists:
 ```bash
-python casefiler.py --path "[file_path]" --ce my_ext.txt --cf my_keywords.txt
+ casefiler.py --path "[file_path]" --ce my_ext.txt --cf my_keywords.txt
 ```
 
 Export results to CSV:
 ```bash
-python casefiler.py --path "[file_path]" --csv scan_results.csv
+  casefiler.py --path "[file_path]" --csv scan_results.csv
 ```
 
 ## Testing Environment
