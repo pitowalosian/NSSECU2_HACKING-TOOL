@@ -147,11 +147,7 @@ Additionally, this tool must only be used on systems, folders, or devices that y
 | Obregon, Sian | *Developer*                        |
 
 ## Original Contribution
-Each group must clearly state what they personally built and what makes the tool unique.
-
-Example:
-
-Our original contribution is the custom scoring engine and recommendation system that evaluates login security based on failed attempts, response messages, lockout behavior, and rate limiting.
+Our original contribution is the detection of file names and extensions that are possibly sensitive and assigning them an initial severity, along with the ability to save the results to a .csv file. 
 
 ## References
 
