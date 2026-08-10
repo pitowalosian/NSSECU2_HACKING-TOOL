@@ -10,7 +10,7 @@ This tool helps find sensitive files that may have been accidentally exposed in 
 
 
 ## User Manual
-See the full user manual here  [User Manual]()
+See the full user manual here  [User Manual](https://drive.google.com/file/d/1HDfQMX_tIWVwiOK27I3Yn7Cd6cdb8mX0/view?usp=sharing)
 
 ## Features
 - **Extension check**: flags files whose extension matches an entry in `wordlists/extensions_list.txt` (a curated list of genuinely sensitive extensions, not a broad web-fuzzing wordlist).
