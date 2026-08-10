@@ -347,11 +347,6 @@ if __name__ == "__main__":
                         default=os.getcwd(),
                         metavar='[TARGET_DIR]',
                         help='directory to scan (default: current directory)')
-    parser.add_argument('--ext',
-                        type=lambda s: s.split(','),
-                        default=None,
-                        metavar='[SPECIFIC_EXT]',
-                        help='file extensions to scan, e.g. --ext .env,.key,.pem')
     parser.add_argument('--ce',
                         default=None,
                         metavar='[EXT_FILE]',
@@ -381,9 +376,7 @@ if __name__ == "__main__":
     print(f"Scanning {args.path} for sensitive files.\n\n")
 
     # Loading the wordlists
-    if args.ext:
-        ext_list = args.ext
-    elif args.ce:
+    if args.ce:
         ext_list = load_wordlist(args.ce)
     else:
         ext_list = load_wordlist("wordlists/extensions_list.txt")

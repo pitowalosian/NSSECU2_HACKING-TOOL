@@ -84,7 +84,6 @@ python casefiler.py --path [TARGET_DIRECTORY]
 | Options | Description |
 |---|---|
 | `--path` | Directory to scan (default: current working directory) |
-| `--ext` | Comma-separated list of extensions to scan for, e.g. `--ext .env,.key,.pem` (overrides all extension wordlists) |
 | `--ce` | Path to a custom extensions wordlist file |
 | `--cf` | Path to a custom sensitive filenames wordlist file |
 | `--csv` | Save results to a CSV file inside the `results/` folder, e.g. `--csv scan1.csv` |
@@ -94,11 +93,6 @@ python casefiler.py --path [TARGET_DIRECTORY]
 Scan a folder with the default extensions list:
 ```bash
  casefiler --path "[file_path]"
-```
-
-Scan for specific extensions only:
-```bash
- casefiler --path "[file_path]" --ext .env,.key,.pem
 ```
 
 Use your own custom wordlists:
