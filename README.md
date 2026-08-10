@@ -60,7 +60,7 @@ chmod +x casefiler.sh
 
 Run the tool using Python:
 ```bash
-python casefiler.py --help
+python3 casefiler.py --help
 ```
 
 Or use the included shell script:
