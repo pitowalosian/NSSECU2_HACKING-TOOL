@@ -8,6 +8,7 @@ The tool also shows why each file was flagged, whether it was detected because o
 ## Purpose
 This tool helps find sensitive files that may have been accidentally exposed in a local folder. Instead of checking files manually, users can run one scan to find files that may contain passwords, keys, or private data. It also gives each file a severity rating to help users identify which files need attention first. 
 
+## [Video Presentation](https://drive.google.com/file/d/16sKX5Xg4xoFZE2wCDbn0HbVBN5RMrRiC/view?usp=sharing)
 
 ## User Manual
 See the full user manual here  [User Manual](https://drive.google.com/file/d/1HDfQMX_tIWVwiOK27I3Yn7Cd6cdb8mX0/view?usp=sharing)
