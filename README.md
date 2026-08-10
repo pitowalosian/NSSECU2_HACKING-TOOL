@@ -11,7 +11,8 @@ This tool helps find sensitive files that may have been accidentally exposed in 
 ## [Video Presentation](https://drive.google.com/file/d/16sKX5Xg4xoFZE2wCDbn0HbVBN5RMrRiC/view?usp=sharing)
 
 ## User Manual
-See the full user manual here  [User Manual](https://drive.google.com/file/d/1HDfQMX_tIWVwiOK27I3Yn7Cd6cdb8mX0/view?usp=sharing)
+See the full user manual here  [User Manual](https://drive.google.com/file/d/1-05JLLm5hz8JDLSJTDdV0vbmwk2SW9zZ/view?usp=sharing)
+
 
 ## Features
 - **Extension check**: flags files whose extension matches an entry in `wordlists/extensions_list.txt` (a curated list of genuinely sensitive extensions, not a broad web-fuzzing wordlist).
